@@ -17,6 +17,7 @@ import { LogInModel } from './model';
 import { useLoader } from '../../controllers/LoaderManager/LoaderManager';
 import { useToast } from '../../controllers/ToastManager/ToastManager';
 import { Redirect } from 'react-router';
+import { auth } from '../../firebase';
 
 const initialState = {
     email: undefined,
@@ -43,10 +44,16 @@ const Login: React.FC = () => {
             Toast.error("Email/Password can't be empty!");
             return;
         }
-        
-        setIsLoggedIn(true);
-        // async calls to login user will go here with the LOADER 
+        Loader.show('Logging in...')
 
+        try {
+            const response = await auth.signInWithEmailAndPassword(email!, password!);
+            Loader.dismiss()
+            setIsLoggedIn(true);
+        } catch(err) {
+            Loader.dismiss()
+            Toast.error(err.message)
+        }        
     }
 
     return (
