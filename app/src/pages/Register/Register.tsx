@@ -8,33 +8,54 @@ import {RoundSolidButton} from '../../components/Buttons/Buttons';
 import '../Login/Login.scss';
 import { useLoader } from '../../controllers/LoaderManager/LoaderManager';
 import { useToast } from '../../controllers/ToastManager/ToastManager';
-import {SignupModel} from './model';
+import { SignupModel } from './model';
+import { auth } from '../../firebase';
 
 const initialState = {
     name: undefined,
     email: undefined,
-    password: undefined
+    password: undefined,
+    confirmPassword: undefined
 };
 
 const Register: React.FC = () => {
-    const [SignupFields, setSignupFields] = useState(initialState);
+    const [signupFields, setSignupFields] = useState(initialState);
+    const [registered, setRegistered] = useState(false)
+
 
     const Toast = useToast();
     const Loader = useLoader();
 
     const onInputChange = (val: any, key: keyof SignupModel) =>{
-        SignupFields[key] = val;
-        setSignupFields({...SignupFields});
+        signupFields[key] = val;
+        setSignupFields({...signupFields});
     };
 
     //Async function to handle empty user inputs on resgisteration form
-    const handleSignup = async() =>{
-        const{email, name, password} = SignupFields;
-        console.log(SignupFields);
+    const handleSignup = async () =>{
+        const{email, name, password, confirmPassword} = signupFields;
+        console.log(signupFields);
+
+        if(password !== confirmPassword){
+            Toast.error("Passwords are not equal! Try again!")
+            return;
+        }
 
         if(!email || !name || !password){
             Toast.error("Field cannot be empty!");
-            return
+            return;
+        }
+
+        Loader.show('Registering');
+
+        const response = await auth.createUserWithEmailAndPassword(email!, password!);
+        if(response.user?.email){
+            Loader.dismiss();
+            setRegistered(true)
+        } else {
+            Loader.dismiss();
+            setRegistered(false);
+            Toast.error("Something went wrong! Please try again!")
         }
     }
 
@@ -55,7 +76,17 @@ const Register: React.FC = () => {
                                 <h2 className="title-bold">Register</h2>
                             </IonText>
                             <div className="signup-form-inputs">
-                            <InputWithStackedLabel 
+                                <InputWithStackedLabel 
+                                    label = {"Name"}
+                                    type="text"
+                                    placeholder="John Doe"
+                                    clearInput
+                                    clearOnEdit
+                                    required
+                                    className="form-input-item"
+                                    onIonChange={(e: any) => onInputChange(e.target.value, 'name')}
+                                />
+                                <InputWithStackedLabel 
                                     label = {"Email"}
                                     type="email"
                                     placeholder="email@gmail.com"
@@ -74,6 +105,16 @@ const Register: React.FC = () => {
                                     required
                                     className="form-input-item"
                                     onIonChange={(e: any) => onInputChange(e.target.value, 'password')}
+                                />
+                                <InputWithStackedLabel 
+                                    label = {"Confirm Password"}
+                                    type="password"
+                                    placeholder="*******"
+                                    clearInput
+                                    clearOnEdit
+                                    required
+                                    className="form-input-item"
+                                    onIonChange={(e: any) => onInputChange(e.target.value, 'confirmPassword')}
                                 />
 
                                 <RoundSolidButton expand="block" onClick={handleSignup}>
