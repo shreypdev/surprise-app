@@ -66,11 +66,13 @@ const NewRoomForm: React.FC = () => {
     const createNewRoom = () => {
         const {roomName, giftFor, budget} = newRoomFormFields;
         // validate all fields
-
+        console.log(newRoomFormFields);
+        
+        
         if(!roomName || !giftFor || !budget) {
             Toast.error("Fields cannot be empty!")
         }
-
+        setNewRoomCreated(true)
         console.log("create new room called")
     }
 
@@ -86,6 +88,7 @@ const NewRoomForm: React.FC = () => {
         <IonPage>
             {/* TODO change the redirect to the newly created room */}
             {backBtnClicked ? <Redirect to="/rooms" /> : <></>}
+            {newRoomCreated ? <Redirect to="/room" /> : <></>}
             <IonHeader>
                 <IonToolbar>
                 <IonText mode="ios" className="ion-text-left" color="primary">
