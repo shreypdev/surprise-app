@@ -40,6 +40,7 @@ export interface InputFieldType {
   export interface InputWithLabelType extends InputFieldType {
     position?: 'fixed' | 'stacked' | 'floating';
     label: string;
+    onClick?: any;
   }
   
   export interface InputTextAreaType {
