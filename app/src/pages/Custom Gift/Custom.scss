@@ -1,0 +1,41 @@
+@import '../../theme/variables.css';
+
+.signup-form {
+    margin-top: 5em;
+    max-width: 330px;
+  
+    ion-input {
+      border-bottom: 1px solid var(--primary);
+    }
+  
+    .signup-form-inputs {
+      margin-bottom: 2em;
+    }
+  
+    .form-input-item {
+      /* Override ionic styling for form-input-item */
+      --background: transparent;
+      --border-color: transparent;
+      --padding-start: 0;
+      --inner-padding-end: 0;
+        margin-bottom: 1em;
+    } 
+    
+    ion-label {
+        margin-bottom: 5px;
+        color: var(--primary);
+    }
+
+    .title-bold {
+      font-weight: bold;
+    } 
+  
+    .title-light {
+      font-weight: lighter;
+    }
+  
+    .underline {
+      border-bottom: 1px solid;
+    }
+  
+} 
