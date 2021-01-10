@@ -16,6 +16,7 @@ import './Custom.scss';
 import { CustomGiftModel } from './model';
 import { useLoader } from '../../controllers/LoaderManager/LoaderManager';
 import { useToast } from '../../controllers/ToastManager/ToastManager';
+import { Redirect } from 'react-router';
 
 const initialState = {
     giftname: undefined,
@@ -26,6 +27,9 @@ const initialState = {
 
 const CustomGift: React.FC = () => {
     const [CustomGiftFields, setCustomGiftFields] = useState(initialState);
+    const [NewCustomGiftFields,setNewCustomGiftFields] = useState(initialState);
+    const [backBtnClicked, setBackBtnClicked] = useState(false)
+    const [newRoomCreated, setNewRoomCreated] = useState(false)
 
     const Toast = useToast();
     const Loader = useLoader();
@@ -35,25 +39,34 @@ const CustomGift: React.FC = () => {
         setCustomGiftFields({ ...CustomGiftFields });
     }; 
 
+    const clearState = () => {
+        setNewCustomGiftFields(initialState);
+    }
+
+    const backBtnHandler = () => {
+        setBackBtnClicked(true)
+        clearState()
+    }
+
     const handleCustomGift = async () => {
         const {giftname, link, category, cost} = CustomGiftFields;
         console.log(CustomGiftFields);
         
         if(!giftname || !link || !cost){
-            Toast.error("Gift Link/Cost/Name can't be empty!");
+            Toast.error("Fields can't be empty!");
             return;
         }
-
-        
-
+        setNewRoomCreated(true)
     }
 
     return (
         <IonPage>
+            {backBtnClicked ? <Redirect to="/rooms" /> : <></>}
+            {newRoomCreated ? <Redirect to="/reformedroomdets" /> : <></>}
             <IonHeader>
                 <IonToolbar>
-                <IonText className="ion-text-center" color="primary">
-                    <h1 className="title-light">Gift App</h1>
+                <IonText mode="ios" className="ion-text-left" color="primary">
+                    <h1 className="title-bold rooms-header">New Custom Gift</h1>
                 </IonText>
                 </IonToolbar>
             </IonHeader>
@@ -61,9 +74,6 @@ const CustomGift: React.FC = () => {
                 <IonRow className="ion-justify-content-center">
                     <IonCol className="signup-form">
                         <form>
-                            <IonText className="ion-text-left" color="primary">
-                                <h2 className="title-bold">Custom Gift</h2>
-                            </IonText>
                             <div className="signup-form-inputs">
                                 <InputWithStackedLabel 
                                     label = {"Gift Name"}
@@ -105,10 +115,20 @@ const CustomGift: React.FC = () => {
                                     className="form-input-item"
                                     onIonChange={(e: any) => onInputChange(e.target.value, 'cost')}
                                 />
-
-                                <RoundSolidButton expand="block" onClick={handleCustomGift}>
-                                    Create
-                                </RoundSolidButton>
+                                <IonRow>
+                                    <IonCol size="4">
+                                        <RoundSolidButton expand="block" onClick={()=>backBtnHandler()}>
+                                            Back
+                                        </RoundSolidButton>
+                                    </IonCol>
+                                    <IonCol size="4"></IonCol>
+                                    <IonCol size="4">
+                                        <RoundSolidButton expand="block" onClick={handleCustomGift}>
+                                            Create
+                                         </RoundSolidButton>
+                                    </IonCol>
+                                </IonRow>
+                               
                             </div>
                         </form>
                     </IonCol>

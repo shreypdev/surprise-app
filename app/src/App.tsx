@@ -29,6 +29,8 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import CustomGift from './pages/Custom Gift/CustomGift';
+import ReformedRoomDets from './pages/ReformedRomDets/ReformedRoomDets';
 
 const App = () => (
   <IonApp>
@@ -43,6 +45,8 @@ const App = () => (
             <Route exact path="/rooms" component={Rooms} />
             <Route exact path="/new-room-form" component={NewRoomForm} />
             <Route exact path="/room" component={RoomDetails} />
+            <Route exact path="/customgift" component={CustomGift}/>
+            <Route exact path="/reformedroomdets" component={ReformedRoomDets}/>
           </IonRouterOutlet>
         </IonReactRouter>
       </LoaderProvider>

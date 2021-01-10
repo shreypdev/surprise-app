@@ -65,7 +65,7 @@ const Register: React.FC = () => {
             {/* <IonHeader>
                 <IonToolbar>
                 <IonText className="ion-text-center" color="primary">
-                    <h1 className="title-light">Gift App</h1>
+                    <h1 className="title-light">Wrapify</h1>
                 </IonText>
                 </IonToolbar>
             </IonHeader> */}
