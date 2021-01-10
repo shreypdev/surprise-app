@@ -1,8 +1,8 @@
 import { IonPage, IonHeader, IonToolbar, IonText, IonContent, IonRow, IonCol, IonButton, IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList } from '@ionic/react';
-import React, { useState } from 'react';
-import { addOutline, giftSharp} from 'ionicons/icons';
+import React, { useEffect, useState } from 'react';
+import { addOutline, giftSharp, list} from 'ionicons/icons';
 import {dummyListOfRooms} from '../../dummy-data/rooms';
-
+import axios from 'axios';
 import '../Login/Login.scss';
 import './Rooms.scss';
 import '../../theme/typography.css'
@@ -14,7 +14,7 @@ const Rooms: React.FC = () => {
     const [listOfRooms, setListOfRooms] = useState(dummyListOfRooms);
     const colorPalette = ["primary", "secondary"]
 
-    const addNewRoom = () => {
+    const addNewRoom = async () => {
         console.log("Add new room clicked");
         setNewRoomClicked(true)
     }
@@ -37,9 +37,12 @@ const Rooms: React.FC = () => {
             <IonContent fullscreen>
                 <IonList lines="full">
                     
-                    {listOfRooms.map(({roomName, numOfGifts}, index) => {
+                    {
+                    listOfRooms.length !== 0  
+                    ? listOfRooms.map(({roomName, numOfGifts}, index) => {
                         // 0 for even and 1 for odd
                         const isEven = index % 2 === 0 ? 0 : 1;
+
                         return (
                             <IonItemSliding key={`room-item-${index}`}>
                                 <IonItem color={colorPalette[isEven]}>
@@ -59,7 +62,10 @@ const Rooms: React.FC = () => {
                                     <IonItemOption onClick={() => removeRoom()} color={colorPalette[isEven+1]}>Remove</IonItemOption>
                                 </IonItemOptions>
                         </IonItemSliding>
-                    )})}
+                    )})
+                    : <IonText color="primary">
+                    <p>No Rooms added.</p>
+                </IonText> }
                 </IonList>
             </IonContent>
         </IonPage>

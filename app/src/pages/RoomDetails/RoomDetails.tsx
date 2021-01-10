@@ -1,16 +1,58 @@
 import { IonPage, IonHeader, IonToolbar, IonText, IonContent, IonList, IonLabel, IonItem, IonButton, IonIcon, IonRow, IonCol, IonCardContent, IonCard, IonCardTitle, IonCardSubtitle, IonCardHeader, IonItemSliding, IonItemOption, IonItemOptions, IonItemDivider, IonBackButton, IonButtons } from '@ionic/react';
 import { chevronForwardOutline } from 'ionicons/icons';
-import React, { useState } from 'react';
-import { Redirect } from 'react-router';
+import React, { useEffect, useState } from 'react';
 import { RoundSolidButton } from '../../components/Buttons/Buttons';
-import { dummyListOfFriends, dummyListOfProducts } from '../../dummy-data/rooms';
-//import {Redirect} from  'react';
+import { dummyListOfFriends } from '../../dummy-data/rooms';
+import { auth } from '../../firebase';
+import axios from 'axios';
+import { Redirect } from 'react-router';
 
 const initialList: string[] = []
 
-const RoomDetails: React.FC = () => {
+const initialRoomDets = {
+    "roomName": "",
+    "giftFor": "",
+    "budget": 0,
+    "admin": "",
+    "members": [],
+    "interests": [],
+    "giftSelected": [{
+        "name": "",
+        "link": "",
+        "category": "",
+        "cost": 0,
+        "votes": 0,
+        "finalized": false
+    }]
+}
 
-    const [giftsList, setGiftsList] = useState(dummyListOfProducts)
+const RoomDetails: React.FC = (props: any) => {
+    const [giftsList, setGiftsList] = useState([])
+    const [roomDets, setRoomDets] = useState(initialRoomDets);
+    const [friendsList, setFriendsList] = useState([])
+    
+    useEffect(()=> {
+        const getRoomDets = async () => {
+            if(auth.currentUser){
+                console.log("ttt");
+                
+                const token = Object.entries(auth?.currentUser!)[6][1];
+                const config = {
+                    headers: { Authorization: `Bearer ${token}` }
+                };
+                
+                const response = await axios.get( 
+                    `https://us-central1-surprise-app-2775f.cloudfunctions.net/rooms/${props.location.state.roomToken}`,
+                    config
+                );
+                console.log(response.data);
+                setRoomDets(response.data)
+                setGiftsList(response.data.giftSelected)
+                setFriendsList(response.data.members)
+            }
+        }
+        getRoomDets()
+    }, [])
     const colorPalette = ["primary", "secondary"]
     const [newGiftclicked,setNewGiftclicked] = useState(false);
     const [backBtnClicked, setBackBtnClicked] = useState(false)
@@ -30,7 +72,7 @@ const RoomDetails: React.FC = () => {
                     <IonBackButton defaultHref="/rooms" text={''} />
                 </IonButtons>
                 <IonText mode="ios" className="ion-text-center" color="primary">
-                    <h1 className="title-bold">Alysha's Birthday</h1>
+                    <h1 className="title-bold">{roomDets.roomName}</h1>
                 </IonText>
                 </IonToolbar>
             </IonHeader>
@@ -41,7 +83,7 @@ const RoomDetails: React.FC = () => {
                     <IonItem color = 'secondary'>
                         <IonLabel>
                             <IonText className="ion-text-wrap" >
-                                <h2>Budget: 50$</h2>
+                                <h2>Budget: {roomDets.budget}</h2>
                             </IonText>
                         </IonLabel>
                     </IonItem>
@@ -66,19 +108,19 @@ const RoomDetails: React.FC = () => {
                         <h1 style={{marginLeft: '10px'}}>Gifts List</h1>
                     </IonText>
                     {giftsList.length!==0 
-                    ? giftsList.map(({productName, category, cost, numOfVotes})=>(
+                    ? giftsList.map(({name, category, cost, votes})=>(
                         <IonCard mode="ios" className="card" color="primary" style={{margin:'10px'}}>
                             <IonRow>
                                 <IonCol size="8">
                                     <IonText color = 'secondary'>
-                                        <h3 style={{margin:'8px'}}>{productName}</h3>
+                                        <h3 style={{margin:'8px'}}>{name}</h3>
                                         <h5 style={{margin:'8px'}}>{category}</h5>
                                     </IonText>
                                 </IonCol>
                                 <IonCol size="4">
                                     <IonText color = 'secondary'>
                                         <h4 style={{margin:'8px', marginTop:'10px'}}>${cost}</h4>
-                                        <h4 style={{margin:'8px'}}>{numOfVotes} votes</h4>
+                                        <h4 style={{margin:'8px'}}>{votes} votes</h4>
                                     </IonText>
                                 </IonCol>
                             </IonRow>
@@ -100,8 +142,8 @@ const RoomDetails: React.FC = () => {
                     {/* TODO: add functionality of removing friends  */}
                     <IonList inset style={{margin:'0px'}}>
                         {
-                            dummyListOfFriends.length !== 0 
-                            ?   dummyListOfFriends.map((email, index) => {
+                            friendsList.length !== 0 
+                            ?   friendsList.map((email, index) => {
                                     // 0 for even and 1 for odd
                                     const isEven = index % 2 === 0 ? 0 : 1;
                                     return (
@@ -121,7 +163,7 @@ const RoomDetails: React.FC = () => {
                                     </IonItemSliding>
                                 )})
                             : <IonText color="primary">
-                                <p>No Friends added.</p>
+                                <p style={{marginLeft: '20px'}}>No Friends added.</p>
                             </IonText>
                         }
                     </IonList>

@@ -1,12 +1,14 @@
 import { IonPage, IonHeader, IonToolbar, IonText, IonButton, IonIcon, IonCol, IonContent, IonRouterLink, IonRow, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonChip } from '@ionic/react';
 import { addOutline, close, giftSharp } from 'ionicons/icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Redirect } from 'react-router';
 import { RoundSolidButton } from '../../components/Buttons/Buttons';
 import { InputWithButton, InputWithStackedLabel } from '../../components/Inputs/Inputs';
 import { useLoader } from '../../controllers/LoaderManager/LoaderManager';
 import { useToast } from '../../controllers/ToastManager/ToastManager';
 import { dummyListOfFriends, dummyListOfInterests } from '../../dummy-data/rooms';
+import { auth } from '../../firebase';
 import { NewRoomFormModel, RawFieldsModel } from './model';
 
 import './NewRoomForm.scss';
@@ -35,6 +37,7 @@ const NewRoomForm: React.FC = () => {
     const [rawFields, setRawFields] = useState(initialRawFields)
     const [backBtnClicked, setBackBtnClicked] = useState(false)
     const [newRoomCreated, setNewRoomCreated] = useState(false)
+    const [roomToken, setRoomToken] = useState('')
 
     const Toast = useToast();
     const Loader = useLoader();
@@ -72,17 +75,33 @@ const NewRoomForm: React.FC = () => {
         setRawFields({...rawFields});
     }
 
-    const createNewRoom = () => {
+    const createNewRoom = async () => {
         const {roomName, giftFor, budget} = newRoomFormFields;
         // validate all fields
-        console.log(newRoomFormFields);
-        
-        
         if(!roomName || !giftFor || !budget) {
             Toast.error("Fields cannot be empty!")
         }
-        setNewRoomCreated(true)
-        clearState()
+        // setNewRoomCreated(true)
+        if(auth.currentUser){
+            const token = Object.entries(auth?.currentUser!)[6][1];
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
+            const body = {
+                roomName, giftFor, budget, interests: interestList, members: friendsList, admin: auth.currentUser.email, 
+                giftSelected: []
+            }
+            const response = await axios.post( 
+                'https://us-central1-surprise-app-2775f.cloudfunctions.net/rooms',
+                body,
+                config
+            );
+            console.log(response.data);
+            setRoomToken(response.data);
+            setNewRoomCreated(true)
+            clearState();
+        }
+        // clearState()
         console.log("create new room called")
     }
 
@@ -103,7 +122,10 @@ const NewRoomForm: React.FC = () => {
         <IonPage>
             {/* TODO change the redirect to the newly created room */}
             {backBtnClicked ? <Redirect to="/rooms" /> : <></>}
-            {newRoomCreated ? <Redirect to="/room" /> : <></>}
+            {newRoomCreated ? <Redirect to={{
+            pathname: "/room",
+            state: { roomToken }
+          }}/> : <></>}
             <IonHeader>
                 <IonToolbar>
                 <IonText mode="ios" className="ion-text-left" color="primary">

@@ -18,6 +18,7 @@ import { useLoader } from '../../controllers/LoaderManager/LoaderManager';
 import { useToast } from '../../controllers/ToastManager/ToastManager';
 import { Redirect } from 'react-router';
 import { auth } from '../../firebase';
+import Logo from '../../assets/logo.png';
 
 const initialState = {
     email: undefined,
@@ -60,20 +61,21 @@ const Login: React.FC = () => {
     return (
         <IonPage>
             {isLoggedIn ? <Redirect to="/rooms" /> : <></>}
-            <IonHeader>
+            {/* <IonHeader>
                 <IonToolbar>
                 <IonText className="ion-text-center" color="primary">
                     <h1 className="title-light">Wrapify</h1>
                 </IonText>
                 </IonToolbar>
-            </IonHeader>
+            </IonHeader> */}
             <IonContent fullscreen>
                 <IonRow className="ion-justify-content-center">
                     <IonCol className="signup-form">
                         <form>
-                            <IonText className="ion-text-left" color="primary">
+                            <img src={Logo} style={{marginLeft: "55px"}}/>
+                            {/* <IonText className="ion-text-left" color="primary">
                                 <h2 className="title-bold">Log In</h2>
-                            </IonText>
+                            </IonText> */}
                             <div className="signup-form-inputs">
                                 <InputWithStackedLabel 
                                     label = {"Email"}
