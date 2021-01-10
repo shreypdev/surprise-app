@@ -10,6 +10,7 @@ import { useLoader } from '../../controllers/LoaderManager/LoaderManager';
 import { useToast } from '../../controllers/ToastManager/ToastManager';
 import { SignupModel } from './model';
 import { auth } from '../../firebase';
+import Logo from '../../assets/logo.png';
 
 const initialState = {
     name: undefined,
@@ -61,17 +62,19 @@ const Register: React.FC = () => {
 
     return (
         <IonPage>
-            <IonHeader>
+            {/* <IonHeader>
                 <IonToolbar>
                 <IonText className="ion-text-center" color="primary">
                     <h1 className="title-light">Gift App</h1>
                 </IonText>
                 </IonToolbar>
-            </IonHeader>
+            </IonHeader> */}
             <IonContent fullscreen>
                 <IonRow className="ion-justify-content-center">
                     <IonCol className="signup-form">
                         <form>
+                            <img src={Logo} style={{marginLeft: "55px"}}/>
+
                             <IonText className="ion-text-left" color="primary">
                                 <h2 className="title-bold">Register</h2>
                             </IonText>
