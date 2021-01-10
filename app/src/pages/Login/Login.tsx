@@ -16,6 +16,7 @@ import './Login.scss';
 import { LogInModel } from './model';
 import { useLoader } from '../../controllers/LoaderManager/LoaderManager';
 import { useToast } from '../../controllers/ToastManager/ToastManager';
+import { Redirect } from 'react-router';
 
 const initialState = {
     email: undefined,
@@ -24,6 +25,7 @@ const initialState = {
 
 const Login: React.FC = () => {
     const [logInFields, setLogInFields] = useState(initialState);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const Toast = useToast();
     const Loader = useLoader();
@@ -41,13 +43,15 @@ const Login: React.FC = () => {
             Toast.error("Email/Password can't be empty!");
             return;
         }
-
+        
+        setIsLoggedIn(true);
         // async calls to login user will go here with the LOADER 
 
     }
 
     return (
         <IonPage>
+            {isLoggedIn ? <Redirect to="/rooms" /> : <></>}
             <IonHeader>
                 <IonToolbar>
                 <IonText className="ion-text-center" color="primary">
