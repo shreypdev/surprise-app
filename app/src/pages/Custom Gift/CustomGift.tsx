@@ -16,6 +16,7 @@ import './Custom.scss';
 import { CustomGiftModel } from './model';
 import { useLoader } from '../../controllers/LoaderManager/LoaderManager';
 import { useToast } from '../../controllers/ToastManager/ToastManager';
+import { Redirect } from 'react-router';
 
 const initialState = {
     giftname: undefined,
@@ -28,7 +29,7 @@ const CustomGift: React.FC = () => {
     const [CustomGiftFields, setCustomGiftFields] = useState(initialState);
     const [NewCustomGiftFields,setNewCustomGiftFields] = useState(initialState);
     const [backBtnClicked, setBackBtnClicked] = useState(false)
-
+    const [newRoomCreated, setNewRoomCreated] = useState(false)
 
     const Toast = useToast();
     const Loader = useLoader();
@@ -55,10 +56,13 @@ const CustomGift: React.FC = () => {
             Toast.error("Fields can't be empty!");
             return;
         }
+        setNewRoomCreated(true)
     }
 
     return (
         <IonPage>
+            {backBtnClicked ? <Redirect to="/rooms" /> : <></>}
+            {newRoomCreated ? <Redirect to="/reformedroomdets" /> : <></>}
             <IonHeader>
                 <IonToolbar>
                 <IonText mode="ios" className="ion-text-left" color="primary">

@@ -8,7 +8,7 @@ import { dummyListOfFriends, dummyListOfProducts } from '../../dummy-data/rooms'
 
 const initialList: string[] = []
 
-const RoomDetails: React.FC = () => {
+const ReformedRoomDets: React.FC = () => {
 
     const [giftsList, setGiftsList] = useState(dummyListOfProducts)
     const colorPalette = ["primary", "secondary"]
@@ -30,7 +30,7 @@ const RoomDetails: React.FC = () => {
                     <IonBackButton defaultHref="/rooms" text={''} />
                 </IonButtons>
                 <IonText mode="ios" className="ion-text-center" color="primary">
-                    <h1 className="title-bold">Alysha's Birthday</h1>
+                    <h1 className="title-bold">Travis' Birthday</h1>
                 </IonText>
                 </IonToolbar>
             </IonHeader>
@@ -41,7 +41,7 @@ const RoomDetails: React.FC = () => {
                     <IonItem color = 'secondary'>
                         <IonLabel>
                             <IonText className="ion-text-wrap" >
-                                <h2>Budget: 50$</h2>
+                                <h2>Budget: 325$</h2>
                             </IonText>
                         </IonLabel>
                     </IonItem>
@@ -136,4 +136,4 @@ const RoomDetails: React.FC = () => {
     )
 }
 
-export default RoomDetails;
+export default ReformedRoomDets;

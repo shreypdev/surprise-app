@@ -1,3 +1,5 @@
+// To test frontend 
+
 export const dummyListOfRooms = [
     {
         roomName: "Alex's Birthday",
@@ -33,27 +35,9 @@ export const dummyListOfInterests = [
 
 export const dummyListOfProducts = [
     {
-        productName: 'Product X',
+        productName: 'Airpods Pro',
         category: 'Technology',
-        cost: '50',
-        numOfVotes: '4',
-    },
-    {
-        productName: 'Apple Watch',
-        category: 'Accessories',
-        cost: '50.00',
-        numOfVotes: '5',
-    },
-    {
-        productName: 'Mobile',
-        category: 'Technology',
-        cost: '100.00',
-        numOfVotes: '5',
-    },
-    {
-        productName: 'Jeans',
-        category: 'Clothing',
-        cost: '12.00',
-        numOfVotes: '5',
-    },
+        cost: '300',
+        numOfVotes: '0',
+    }
 ]
