@@ -4,8 +4,6 @@ import * as express from 'express';
 import * as cors from 'cors';
 import authMiddleware from './auth-middleware';
 
-admin.initializeApp();
-
 const roomsApp = express();
 const roomsCollection = admin.firestore().collection('rooms');
 
