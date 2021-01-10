@@ -87,8 +87,8 @@ const CustomGift: React.FC = () => {
                                 />
                                 <InputWithStackedLabel 
                                     label = {"Gift Category"}
-                                    type="url"
-                                    placeholder="text"
+                                    type="text"
+                                    placeholder="Category"
                                     clearInput
                                     clearOnEdit
                                     required
