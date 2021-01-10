@@ -8,6 +8,8 @@ import { LoaderProvider } from './controllers/LoaderManager/LoaderManager';
 import { ToastProvider } from './controllers/ToastManager/ToastManager';
 import Register from './pages/Register/Register';
 import Rooms from './pages/Rooms/Rooms';
+import NewRoomForm from './pages/NewRoomForm/NewRoomForm';
+import RoomDetails from './pages/RoomDetails/RoomDetails';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -27,7 +29,6 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import NewRoomForm from './pages/NewRoomForm/NewRoomForm';
 
 const App = () => (
   <IonApp>
@@ -41,6 +42,7 @@ const App = () => (
             <Route exact path="/register" component={Register} />
             <Route exact path="/rooms" component={Rooms} />
             <Route exact path="/new-room-form" component={NewRoomForm} />
+            <Route exact path="/room" component={RoomDetails} />
           </IonRouterOutlet>
         </IonReactRouter>
       </LoaderProvider>

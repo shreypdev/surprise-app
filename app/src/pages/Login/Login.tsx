@@ -49,6 +49,7 @@ const Login: React.FC = () => {
         try {
             const response = await auth.signInWithEmailAndPassword(email!, password!);
             Loader.dismiss()
+            console.log("token - ", auth.currentUser)
             setIsLoggedIn(true);
         } catch(err) {
             Loader.dismiss()
