@@ -9,6 +9,7 @@ export type ButtonProps = {
     onClick?: any;
     className?: string;
     strong?: boolean;
+    slot?: string
 };
   
 export interface ButtonWithIconProps extends ButtonProps {

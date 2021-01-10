@@ -1,6 +1,7 @@
 import { IonPage, IonHeader, IonToolbar, IonText, IonContent, IonList, IonLabel, IonItem, IonButton, IonIcon, IonRow, IonCol, IonCardContent, IonCard, IonCardTitle, IonCardSubtitle, IonCardHeader, IonItemSliding, IonItemOption, IonItemOptions } from '@ionic/react';
 import { chevronForwardOutline, colorPalette, giftSharp } from 'ionicons/icons';
 import React, { useState } from 'react';
+import { RoundSolidButton } from '../../components/Buttons/Buttons';
 
 const RoomDetails: React.FC = () => {
     return (
@@ -43,15 +44,13 @@ const RoomDetails: React.FC = () => {
                     <IonText color = 'primary'>
                         <h1>Gifts List</h1>
                     </IonText>
-                    <IonItemSliding>
-                        <IonItem>
                     <IonCard mode="ios" className="card" color="primary" style={{margin:'10px'}}>
                         <IonRow>
                             <IonCol size="8">
-                            <IonText color = 'secondary'>
-                                <h1 style={{margin:'8px'}}>Product X</h1>
-                                <h5 style={{margin:'8px'}}>Technology</h5>
-                            </IonText>
+                                <IonText color = 'secondary'>
+                                    <h2 style={{margin:'8px'}}>Product X</h2>
+                                    <h5 style={{margin:'8px'}}>Technology</h5>
+                                </IonText>
                             </IonCol>
                             <IonCol size="4">
                                 <IonText color = 'secondary'>
@@ -61,16 +60,11 @@ const RoomDetails: React.FC = () => {
                             </IonCol>
                         </IonRow>
 
-                        <IonCardContent className="card-content">
-                        </IonCardContent>
+                        <IonItem color='primary' style={{marginRight: '20px'}}>
+                            <RoundSolidButton fill="outline" color='secondary' slot="end">Vote</RoundSolidButton>
+                        </IonItem>
                     </IonCard>
-                    </IonItem>
-                    <IonItemOptions side="end">
-                    <IonItemOption color="secondary" onClick={() => console.log('share clicked')}>Share</IonItemOption>
-
-                        </IonItemOptions>
-
-                    </IonItemSliding>
+                    
                     </IonCol>
                     
                 </IonRow>
