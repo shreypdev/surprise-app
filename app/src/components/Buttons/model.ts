@@ -10,6 +10,7 @@ export type ButtonProps = {
     className?: string;
     strong?: boolean;
     slot?: string
+    style?: any
 };
   
 export interface ButtonWithIconProps extends ButtonProps {

@@ -1,16 +1,26 @@
-import { IonPage, IonHeader, IonToolbar, IonText, IonContent, IonList, IonLabel, IonItem, IonButton, IonIcon, IonRow, IonCol, IonCardContent, IonCard, IonCardTitle, IonCardSubtitle, IonCardHeader, IonItemSliding, IonItemOption, IonItemOptions } from '@ionic/react';
-import { chevronForwardOutline, colorPalette, giftSharp } from 'ionicons/icons';
+import { IonPage, IonHeader, IonToolbar, IonText, IonContent, IonList, IonLabel, IonItem, IonButton, IonIcon, IonRow, IonCol, IonCardContent, IonCard, IonCardTitle, IonCardSubtitle, IonCardHeader, IonItemSliding, IonItemOption, IonItemOptions, IonItemDivider, IonBackButton, IonButtons } from '@ionic/react';
+import { chevronForwardOutline } from 'ionicons/icons';
 import React, { useState } from 'react';
 import { RoundSolidButton } from '../../components/Buttons/Buttons';
+import { dummyListOfFriends, dummyListOfProducts } from '../../dummy-data/rooms';
+
+const initialList: string[] = []
 
 const RoomDetails: React.FC = () => {
+
+    const [giftsList, setGiftsList] = useState(dummyListOfProducts)
+    const colorPalette = ["primary", "secondary"]
+
     return (
         <IonPage>
             {/* TODO change the redirect to the newly created room */}
             <IonHeader>
                 <IonToolbar>
-                <IonText mode="ios" className="ion-text-left" color="primary">
-                    <h1 className="title-bold rooms-header">Alysha's Birthday</h1>
+                <IonButtons slot="start">
+                    <IonBackButton defaultHref="/rooms" text={''} />
+                </IonButtons>
+                <IonText mode="ios" className="ion-text-center" color="primary">
+                    <h1 className="title-bold">Alysha's Birthday</h1>
                 </IonText>
                 </IonToolbar>
             </IonHeader>
@@ -42,28 +52,68 @@ const RoomDetails: React.FC = () => {
                 <IonRow>
                     <IonCol>
                     <IonText color = 'primary'>
-                        <h1>Gifts List</h1>
+                        <h1 style={{marginLeft: '10px'}}>Gifts List</h1>
                     </IonText>
-                    <IonCard mode="ios" className="card" color="primary" style={{margin:'10px'}}>
-                        <IonRow>
-                            <IonCol size="8">
-                                <IonText color = 'secondary'>
-                                    <h2 style={{margin:'8px'}}>Product X</h2>
-                                    <h5 style={{margin:'8px'}}>Technology</h5>
-                                </IonText>
-                            </IonCol>
-                            <IonCol size="4">
-                                <IonText color = 'secondary'>
-                                    <h4 style={{margin:'8px', marginTop:'10px'}}>$49.99</h4>
-                                    <h4 style={{margin:'8px'}}>4 votes</h4>
-                                </IonText>
-                            </IonCol>
-                        </IonRow>
+                    {giftsList.length!==0 
+                    ? giftsList.map(({productName, category, cost, numOfVotes})=>(
+                        <IonCard mode="ios" className="card" color="primary" style={{margin:'10px'}}>
+                            <IonRow>
+                                <IonCol size="8">
+                                    <IonText color = 'secondary'>
+                                        <h3 style={{margin:'8px'}}>{productName}</h3>
+                                        <h5 style={{margin:'8px'}}>{category}</h5>
+                                    </IonText>
+                                </IonCol>
+                                <IonCol size="4">
+                                    <IonText color = 'secondary'>
+                                        <h4 style={{margin:'8px', marginTop:'10px'}}>${cost}</h4>
+                                        <h4 style={{margin:'8px'}}>{numOfVotes} votes</h4>
+                                    </IonText>
+                                </IonCol>
+                            </IonRow>
 
-                        <IonItem color='primary' style={{marginRight: '20px'}}>
-                            <RoundSolidButton fill="outline" color='secondary' slot="end">Vote</RoundSolidButton>
-                        </IonItem>
-                    </IonCard>
+                            <IonItem color='primary' style={{marginRight: '20px'}}>
+                                <RoundSolidButton fill="outline" size='small' color='secondary' slot="end" style={{marginTop: '10px', marginBottom: '10px', marginRight:'10px'}}>Remove</RoundSolidButton>
+                                <RoundSolidButton fill="outline" size='small' color='secondary' slot="end" style={{marginTop: '10px', marginBottom: '10px'}}>Vote</RoundSolidButton>
+                            </IonItem>
+                        </IonCard>
+                    ))
+                    :<IonText color="primary" >
+                        <p style={{marginLeft: '20px'}}>No Gifts added.</p>
+                    </IonText>}
+                    
+                    <hr style={{backgroundColor: "#f85d61"}}/>
+                    <IonText color = 'primary'>
+                        <h1 style={{marginLeft: '10px'}}>Members</h1>
+                    </IonText>
+                    {/* TODO: add functionality of removing friends  */}
+                    <IonList inset style={{margin:'0px'}}>
+                        {
+                            dummyListOfFriends.length !== 0 
+                            ?   dummyListOfFriends.map((email, index) => {
+                                    // 0 for even and 1 for odd
+                                    const isEven = index % 2 === 0 ? 0 : 1;
+                                    return (
+                                        <IonItemSliding key={`room-item-${index}`}>
+                                            <IonItem color={colorPalette[isEven]} >
+                                                
+                                                <IonLabel>
+                                                    <IonText className="ion-text-wrap">
+                                                        <h3>{email}</h3>
+                                                        <div style={{marginTop: "5px"}}></div>
+                                                    </IonText>
+                                                </IonLabel>
+                                            </IonItem>
+                                            <IonItemOptions side="end">
+                                                <IonItemOption onClick={()=> console.log("remove freind")} color={colorPalette[isEven+1]}>Remove</IonItemOption>
+                                            </IonItemOptions>
+                                    </IonItemSliding>
+                                )})
+                            : <IonText color="primary">
+                                <p>No Friends added.</p>
+                            </IonText>
+                        }
+                    </IonList>
                     
                     </IonCol>
                     
