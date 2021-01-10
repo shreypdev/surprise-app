@@ -23,6 +23,7 @@ module.exports = {
     'import',
   ],
   rules: {
-    quotes: ['error', 'single'],
+    'quotes': ['error', 'single'],
+    'max-len': [2, {code: 100, tabWidth: 2, ignoreUrls: true}],
   },
 };
