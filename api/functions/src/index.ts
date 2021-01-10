@@ -1,5 +1,5 @@
-import users from '../controllers/users';
+import rooms from '../controllers/rooms';
 
 module.exports = {
-  users,
+  rooms,
 };
