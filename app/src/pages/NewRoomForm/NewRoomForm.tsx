@@ -23,12 +23,14 @@ const initialRawFields: RawFieldsModel = {
 }
 
 const initialList: string[] = []
+const tempInitialList: string[] = []
+
 
 const NewRoomForm: React.FC = () => {
 
     const [interestList, setInterestList] = useState(initialList)
     const [newRoomFormFields, setNewRoomFormFields] = useState(initialNewRoomForm)
-    const [friendsList, setFriendsList] = useState(initialList)
+    const [friendsList, setFriendsList] = useState(tempInitialList)
     const colorPalette = ["primary", "secondary"]
     const [rawFields, setRawFields] = useState(initialRawFields)
     const [backBtnClicked, setBackBtnClicked] = useState(false)
@@ -36,6 +38,13 @@ const NewRoomForm: React.FC = () => {
 
     const Toast = useToast();
     const Loader = useLoader();
+
+    const clearState = () => {
+        setInterestList(initialList)
+        setFriendsList(friendsList)
+        setRawFields(initialRawFields)
+        setNewRoomFormFields(initialNewRoomForm)
+    }
 
     const onInputChange = (val: any, key: keyof NewRoomFormModel) => {
         newRoomFormFields[key] = val;
@@ -66,12 +75,20 @@ const NewRoomForm: React.FC = () => {
     const createNewRoom = () => {
         const {roomName, giftFor, budget} = newRoomFormFields;
         // validate all fields
-
+        console.log(newRoomFormFields);
+        
+        
         if(!roomName || !giftFor || !budget) {
             Toast.error("Fields cannot be empty!")
         }
-
+        setNewRoomCreated(true)
+        clearState()
         console.log("create new room called")
+    }
+
+    const backBtnHandler = () => {
+        setBackBtnClicked(true)
+        clearState()
     }
 
     const removeFriend = () => {
@@ -86,6 +103,7 @@ const NewRoomForm: React.FC = () => {
         <IonPage>
             {/* TODO change the redirect to the newly created room */}
             {backBtnClicked ? <Redirect to="/rooms" /> : <></>}
+            {newRoomCreated ? <Redirect to="/room" /> : <></>}
             <IonHeader>
                 <IonToolbar>
                 <IonText mode="ios" className="ion-text-left" color="primary">
@@ -160,7 +178,7 @@ const NewRoomForm: React.FC = () => {
                                     onIonChange={(e: any) => onInputChange(e.target.value.toString(), 'budget')}
                                 />
                                 <InputWithButton 
-                                    label = {"Add Friends"}
+                                    label = {"Add Member"}
                                     type="email"
                                     placeholder="Enter your friend's email"
                                     clearInput
@@ -201,7 +219,7 @@ const NewRoomForm: React.FC = () => {
                                 
                                 <IonRow>
                                     <IonCol size="4">
-                                        <RoundSolidButton expand="block" onClick={()=>setBackBtnClicked(true)}>
+                                        <RoundSolidButton expand="block" onClick={()=>backBtnHandler()}>
                                             Back
                                         </RoundSolidButton>
                                     </IonCol>

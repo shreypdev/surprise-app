@@ -30,3 +30,30 @@ export const dummyListOfInterests = [
     "Food",
     "Dining"
 ]
+
+export const dummyListOfProducts = [
+    {
+        productName: 'Product X',
+        category: 'Technology',
+        cost: '50',
+        numOfVotes: '4',
+    },
+    {
+        productName: 'Apple Watch',
+        category: 'Accessories',
+        cost: '50.00',
+        numOfVotes: '5',
+    },
+    {
+        productName: 'Mobile',
+        category: 'Technology',
+        cost: '100.00',
+        numOfVotes: '5',
+    },
+    {
+        productName: 'Jeans',
+        category: 'Clothing',
+        cost: '12.00',
+        numOfVotes: '5',
+    },
+]
