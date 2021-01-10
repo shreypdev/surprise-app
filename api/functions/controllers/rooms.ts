@@ -10,13 +10,41 @@ const roomsCollection = admin.firestore().collection('rooms');
 roomsApp.use(cors({origin: true}));
 roomsApp.use(authMiddleware);
 
+interface Gift {
+  name: string,
+  link: string,
+  category: string,
+  cost: number,
+  votes: number,
+  finalized: boolean
+}
+
+interface Room {
+  roomName: string;
+  giftFor: string;
+  budget: number;
+  admin: string;
+  members: Array<string>;
+  interests: Array<string>;
+  giftSelected: Array<Gift>;
+}
+
+// interface RoomWithID extends Room {
+//   id: number;
+// }
 
 roomsApp.post('/', async (req, res) => {
-  const room = req.body;
+  const {roomName, giftFor, budget, admin, members, interests, giftSelected} = req.body;
 
-  await roomsCollection.add(room);
+  if (!(roomName && giftFor &&budget && admin && members && interests && giftSelected)) {
+    res.status(400).send('Incorrect param(s)');
+  }
 
-  res.status(201).send();
+  const room = req.body as Room;
+
+  const a = await roomsCollection.add(room);
+
+  res.status(201).send(a.id);
 });
 
 roomsApp.get('/', async (req, res) => {
