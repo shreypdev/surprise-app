@@ -1,7 +1,7 @@
 export const dummyListOfRooms = [
     {
         roomName: "Alex's Birthday",
-        numOfGifts: 5
+        numOfGifts: 4
     },
     {
         roomName: "Alysha's Birthday",
@@ -9,7 +9,7 @@ export const dummyListOfRooms = [
     },
     {
         roomName: "Jayden and Jon's Anniversary",
-        numOfGifts: 6
+        numOfGifts: 3
     },
     {
         roomName: "Jude's Party",
@@ -29,6 +29,10 @@ export const dummyListOfInterests = [
     "Clothing",
     "Food",
     "Dining"
+]
+
+export const initialListOfProds = [
+    
 ]
 
 export const dummyListOfProducts = [
