@@ -1,8 +1,10 @@
 import { IonPage, IonHeader, IonToolbar, IonText, IonContent, IonList, IonLabel, IonItem, IonButton, IonIcon, IonRow, IonCol, IonCardContent, IonCard, IonCardTitle, IonCardSubtitle, IonCardHeader, IonItemSliding, IonItemOption, IonItemOptions, IonItemDivider, IonBackButton, IonButtons } from '@ionic/react';
 import { chevronForwardOutline } from 'ionicons/icons';
 import React, { useState } from 'react';
+import { Redirect } from 'react-router';
 import { RoundSolidButton } from '../../components/Buttons/Buttons';
 import { dummyListOfFriends, dummyListOfProducts } from '../../dummy-data/rooms';
+//import {Redirect} from  'react';
 
 const initialList: string[] = []
 
@@ -10,6 +12,12 @@ const RoomDetails: React.FC = () => {
 
     const [giftsList, setGiftsList] = useState(dummyListOfProducts)
     const colorPalette = ["primary", "secondary"]
+    const [newGiftclicked,setNewGiftclicked] = useState(false);
+
+    const addNewGift = () => {
+        console.log("Add new custom gift clicked");
+        setNewGiftclicked(true)
+    }
 
     return (
         <IonPage>
@@ -43,7 +51,8 @@ const RoomDetails: React.FC = () => {
                     </IonItem>
                     <IonItem color = 'secondary'>
                         Add a custom gift
-                        <IonButton slot="end" fill='clear' color={'primary'}>
+                        <IonButton slot="end" fill='clear' color={'primary'} onClick={()=>addNewGift()}>
+                            {newGiftclicked? <Redirect to="/customgift" /> : <></>}
                             <IonIcon slot="icon-only" icon={chevronForwardOutline} />
                         </IonButton>
                     </IonItem>
