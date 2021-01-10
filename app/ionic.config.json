@@ -1,5 +1,7 @@
 {
   "name": "surprise-app",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "react"
 }

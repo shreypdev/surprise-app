@@ -7,6 +7,7 @@ import Login from './pages/Login/Login';
 import { LoaderProvider } from './controllers/LoaderManager/LoaderManager';
 import { ToastProvider } from './controllers/ToastManager/ToastManager';
 import Register from './pages/Register/Register';
+import Rooms from './pages/Rooms/Rooms';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -27,7 +28,6 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-
 const App = () => (
   <IonApp>
     <ToastProvider>
@@ -38,6 +38,7 @@ const App = () => (
             <Route exact path="/" render={() => <Redirect to="/home" />} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
+            <Route exact path="/rooms" component={Rooms} />
           </IonRouterOutlet>
         </IonReactRouter>
       </LoaderProvider>
