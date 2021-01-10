@@ -6,6 +6,7 @@ import {dummyListOfRooms} from '../../dummy-data/rooms';
 import '../Login/Login.scss';
 import './Rooms.scss';
 import '../../theme/typography.css'
+import { Redirect } from 'react-router';
 
 const Rooms: React.FC = () => {
 
@@ -22,6 +23,7 @@ const Rooms: React.FC = () => {
     }
     return (
         <IonPage>
+            {newRoomClicked ? <Redirect to="/new-room-form" /> : <></>}
             <IonHeader>
                 <IonToolbar>
                 <IonText mode="ios" className="ion-text-left" color="primary">

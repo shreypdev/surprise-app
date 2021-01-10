@@ -27,6 +27,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import NewRoomForm from './pages/NewRoomForm/NewRoomForm';
 
 const App = () => (
   <IonApp>
@@ -39,6 +40,7 @@ const App = () => (
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/rooms" component={Rooms} />
+            <Route exact path="/new-room-form" component={NewRoomForm} />
           </IonRouterOutlet>
         </IonReactRouter>
       </LoaderProvider>

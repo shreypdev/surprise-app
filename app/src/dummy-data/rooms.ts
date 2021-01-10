@@ -16,3 +16,17 @@ export const dummyListOfRooms = [
         numOfGifts: 2
     },
 ]
+
+export const dummyListOfFriends = [
+    "jaime@gmail.com",
+    "joey@gmail.com",
+    "rachel@gmail.com",
+    "monica@gmail.com"
+]
+
+export const dummyListOfInterests = [
+    "Technology",
+    "Clothing",
+    "Food",
+    "Dining"
+]
