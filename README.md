@@ -15,9 +15,9 @@
 - [What it does](#what-it-does)
 - [How we built it](#how-we-built-it)
 - [Challenges we ran into](#challenges-we-ran-into)
-- [Accomplishments that we're proud of](#accomplishments-that-we-are-proud-of) 
+- [Accomplishments that we're proud of](#accomplishments-that-were-proud-of) 
 - [What we learned](#what-we-learned)
-- [What's next for Wrapify](#what's-next-for-wrapify)
+- [What's next for Wrapify](#whats-next-for-wrapify)
 
 ## Inspiration
 
@@ -48,7 +48,7 @@ This was our first time integrating Firebase in React and we had problems with u
 
 Lastly, developing a good UI/UX was another challenge we faced. But by designing some user flows and sketching out low fidelity mockups we were able to come up with good high fidelity mockups. 
 
-## Accomplishments that we are proud of 
+## Accomplishments that we're proud of 
 
 We were really happy with the whole app, as we built a really interactive UI/UX long with a working API and database. We believe that users can navigate the UI very easily and the data shown is relevant to the users. One of the crucial aspects is that our platform is a Hybrid Platform and will attract lots of users. 
 
